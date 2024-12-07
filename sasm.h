@@ -37,9 +37,9 @@ namespace sasm
     std::string name;
 
 #ifdef _WIN32
-    HANDLE object = nullptr;
+    HANDLE object{ nullptr };
 #else
-    sem_t* object = nullptr;
+    sem_t* object{ nullptr };
 #endif
 
   public:
@@ -64,13 +64,13 @@ namespace sasm
   class Shared_Memory
   {
     std::string name;
-    std::size_t size = 0;
-    void* address = nullptr;
+    std::size_t size{ 0 };
+    void* address{ nullptr };
 
 #ifdef _WIN32
-    HANDLE file_mapping = nullptr;
+    HANDLE file_mapping{ nullptr };
 #else
-    int file_mapping = -1;
+    int file_mapping{ -1 };
 #endif
 
     void* map();
