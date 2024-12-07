@@ -143,13 +143,10 @@ namespace sasm
 #else
     sem_close(this->object);
 
-    if (this->name.empty())
+    if (!this->name.empty())
     {
-      // Name is nullptr, skipping sem_unlink
-      return;
+      sem_unlink(this->name.data());
     }
-
-    sem_unlink(this->name.data());
 #endif
 
     // Clear members
