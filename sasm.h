@@ -57,6 +57,7 @@ namespace sasm
     Semaphore(Semaphore&&) = default;                 // Move constructor
     Semaphore& operator=(Semaphore&&) = default;      // Move assignment
 
+    Semaphore() {} // Default constructor
     ~Semaphore();
   };
 
@@ -88,6 +89,7 @@ namespace sasm
     Shared_Memory(Shared_Memory&&) = default;                 // Move constructor
     Shared_Memory& operator=(Shared_Memory&&) = default;      // Move assignment
 
+    Shared_Memory() {} // Default constructor
     ~Shared_Memory();
   };
 
