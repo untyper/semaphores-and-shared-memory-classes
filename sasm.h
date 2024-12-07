@@ -243,7 +243,7 @@ namespace sasm
 
   inline void* Shared_Memory::get_address() const
   {
-    this->address;
+    return this->address;
   }
 
 #ifdef _WIN32
