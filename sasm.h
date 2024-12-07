@@ -43,6 +43,15 @@ namespace sasm
 #endif
 
   public:
+    // Getters
+    const std::string& get_name() const;
+    
+#ifdef _WIN32
+    HANDLE get_object() const;
+#else
+    sem_t* get_object() const;
+#endif
+
     void close();
     bool wait(unsigned int timeout_ms) const;
     bool increment() const;
@@ -77,6 +86,17 @@ namespace sasm
     void* map();
 
   public:
+    // Getters
+    const std::string& get_name() const;
+    std::size_t get_size() const;
+    void* get_address() const;
+#ifdef _WIN32
+    HANDLE get_file_mapping() const;
+#else
+    int get_file_mapping() const;
+#endif
+    
+
     void close();
     bool create(const std::string& name, std::size_t size);
 
@@ -94,6 +114,22 @@ namespace sasm
   };
 
   // ********** Definitions **********
+
+  // Semaphore
+
+  inline const std::string& Semaphore::get_name() const
+  {
+    return this->name;
+  }
+
+#ifdef _WIN32
+  HANDLE Semaphore::get_object() const
+#else
+  sem_t* Semaphore::get_object() const
+#endif
+  {
+    return this->object;
+  }
 
   inline void Semaphore::close()
   {
@@ -196,7 +232,32 @@ namespace sasm
     this->close();
   }
 
-  //void close_shared_memory(void* shm, const char* name, void* mapped = nullptr, size_t size = 0)
+  // Shared_Memory
+
+  inline const std::string& Shared_Memory::get_name() const
+  {
+    return this->name;
+  }
+
+  inline std::size_t Shared_Memory::get_size() const
+  {
+    return this->size;
+  }
+
+  inline void* Shared_Memory::get_address() const
+  {
+    this->address;
+  }
+
+#ifdef _WIN32
+  inline HANDLE Shared_Memory::get_file_mapping() const
+#else
+  inline int Shared_Memory::get_file_mapping() const
+#endif
+  {
+    return this->file_mapping;
+  }
+
   inline void Shared_Memory::close()
   {
 #ifdef _WIN32
