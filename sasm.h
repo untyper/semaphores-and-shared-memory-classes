@@ -352,7 +352,7 @@ namespace sasm
 
 #ifdef _WIN32
     this->file_mapping = CreateFileMappingA(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, size, name.data());
-    return this->file_mapping != nullptr;
+    // return this->file_mapping != nullptr;
 #else
     int shm_fd = shm_open(name.data(), O_CREAT | O_RDWR, 0666);
 
@@ -369,7 +369,7 @@ namespace sasm
     }
 
     this->file_mapping = shm_fd;
-    return true;
+    // return true;
 #endif
 
     // Now map to memory
