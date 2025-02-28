@@ -54,7 +54,7 @@ namespace sasm
 #endif
 
     void close();
-    bool wait(unsigned int timeout_ms) const;
+    bool wait(unsigned int timeout_ms = INFINITE) const;
     bool increment(int count = 1) const;
     bool create(const std::string& name, int initial_count = 0);
 
