@@ -54,7 +54,7 @@ namespace sasm
 
     void close();
     bool wait(unsigned int timeout_ms) const;
-    bool increment() const;
+    bool increment(int count = 1) const;
     bool create(const std::string& name, int initial_count = 0);
 
     // Constructor
@@ -187,7 +187,7 @@ namespace sasm
 #endif
   }
 
-  inline bool Semaphore::increment() const
+  inline bool Semaphore::increment(int count) const
   {
     if (this->object == nullptr)
     {
@@ -195,9 +195,19 @@ namespace sasm
     }
 
 #ifdef _WIN32
-    return ReleaseSemaphore(this->object, 1, nullptr);
+    return ReleaseSemaphore(this->object, count, nullptr);
 #else
-    return sem_post(this->object) == 0;
+    bool success = true;
+
+    for (int i = 0; i < count; ++i)
+    {
+      if (sem_post(this->object) != 0)
+      {
+        success = false;
+      }
+    }
+
+    return success;
 #endif
   }
 
