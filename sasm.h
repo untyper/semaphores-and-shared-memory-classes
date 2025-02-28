@@ -34,6 +34,7 @@ namespace sasm
   // Simple cross platform Semaphore class for Unix and Windows
   class Semaphore
   {
+    static constexpr int max_count{ 1024 };
     std::string name;
 
 #ifdef _WIN32
@@ -137,6 +138,9 @@ namespace sasm
     {
       return;
     }
+
+    // Release any blocked threads.
+    this->increment(Semaphore::max_count);
 
 #ifdef _WIN32
     CloseHandle(this->object);
